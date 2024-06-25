@@ -832,7 +832,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "DWT-Chemnitz-map",
-	Description:      "Chemnitz open data map for Database & Web Technologies",
+	Description:      "Chemnitz open data map by Vitalii Popov (backend) & Anastasiia Zibrova (frontend)",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

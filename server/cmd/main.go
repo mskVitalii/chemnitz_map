@@ -29,7 +29,7 @@ import (
 
 // @title						DWT-Chemnitz-map
 // @version					1.0
-// @description				Chemnitz open data map for Database & Web Technologies
+// @description				Chemnitz open data map by Vitalii Popov (backend) & Anastasiia Zibrova (frontend)
 // @contact.name				Vitalii Popov
 // @contact.url				https://www.linkedin.com/in/mskVitalii/
 // @contact.email				msk.vitaly@gmail.com

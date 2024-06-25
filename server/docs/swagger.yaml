@@ -224,7 +224,8 @@ info:
     email: msk.vitaly@gmail.com
     name: Vitalii Popov
     url: https://www.linkedin.com/in/mskVitalii/
-  description: Chemnitz open data map for Database & Web Technologies
+  description: Chemnitz open data map by Vitalii Popov (backend) & Anastasiia Zibrova
+    (frontend)
   title: DWT-Chemnitz-map
   version: "1.0"
 paths:

@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Chemnitz open data map for Database \u0026 Web Technologies",
+        "description": "Chemnitz open data map by Vitalii Popov (backend) \u0026 Anastasiia Zibrova (frontend)",
         "title": "DWT-Chemnitz-map",
         "contact": {
             "name": "Vitalii Popov",
