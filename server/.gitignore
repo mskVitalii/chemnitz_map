@@ -1,0 +1,7 @@
+.env
+.env.production
+
+logs
+*.log
+
+resources/gitlab_access_token.txt

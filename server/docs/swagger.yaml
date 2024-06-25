@@ -1,0 +1,532 @@
+basePath: /
+definitions:
+  dto.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      favourites:
+        items:
+          $ref: '#/definitions/model.UserFavourite'
+        type: array
+      homes:
+        items:
+          $ref: '#/definitions/model.UserHome'
+        type: array
+      password:
+        type: string
+      status:
+        type: string
+      userType:
+        type: string
+    type: object
+  dto.CreateUserResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.DeleteUserResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.GetUserClaimsResponse:
+    properties:
+      id:
+        type: string
+      userType:
+        type: string
+    type: object
+  dto.GetUserResponse:
+    properties:
+      _id:
+        type: string
+      email:
+        type: string
+      favourites:
+        items:
+          $ref: '#/definitions/model.UserFavourite'
+        type: array
+      homes:
+        items:
+          $ref: '#/definitions/model.UserHome'
+        type: array
+      password:
+        type: string
+      providers:
+        items:
+          type: string
+        type: array
+      status:
+        type: string
+      userType:
+        type: string
+    type: object
+  dto.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dto.ReadPlacesResponse:
+    properties:
+      data:
+        $ref: '#/definitions/model.Place'
+      message:
+        type: string
+    type: object
+  dto.SearchPlacesRequest:
+    properties:
+      categories:
+        items:
+          type: string
+        type: array
+      hasEmail:
+        example: "false"
+        type: string
+      isBarrierFree:
+        example: "false"
+        type: string
+      other:
+        additionalProperties:
+          type: string
+        type: object
+    type: object
+  dto.SearchPlacesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.PlaceMinified'
+        type: array
+      message:
+        type: string
+    type: object
+  dto.SuccessLoginResponse:
+    properties:
+      expire:
+        type: string
+      message:
+        type: string
+    type: object
+  dto.SuccessLogoutResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.SuccessRefreshTokenResponse:
+    properties:
+      expire:
+        type: string
+      message:
+        type: string
+    type: object
+  dto.UnauthorizedResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.UpdateUserResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  lib.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  model.Place:
+    properties:
+      _id:
+        type: string
+      category:
+        type: string
+      coords:
+        $ref: '#/definitions/model.Point'
+      location:
+        type: string
+      originalId:
+        type: string
+      other:
+        additionalProperties:
+          type: string
+        type: object
+      postCode:
+        type: string
+      street:
+        type: string
+      telephone:
+        type: string
+    type: object
+  model.PlaceMinified:
+    properties:
+      _id:
+        type: string
+      category:
+        type: string
+      coords:
+        $ref: '#/definitions/model.Point'
+    type: object
+  model.Point:
+    properties:
+      x:
+        type: number
+      "y":
+        type: number
+    type: object
+  model.User:
+    properties:
+      _id:
+        type: string
+      email:
+        type: string
+      favourites:
+        items:
+          $ref: '#/definitions/model.UserFavourite'
+        type: array
+      homes:
+        items:
+          $ref: '#/definitions/model.UserHome'
+        type: array
+      password:
+        type: string
+      providers:
+        items:
+          type: string
+        type: array
+      status:
+        type: string
+      userType:
+        type: string
+    type: object
+  model.UserFavourite:
+    properties:
+      _id:
+        type: string
+      category:
+        type: string
+      coords:
+        $ref: '#/definitions/model.Point'
+    type: object
+  model.UserHome:
+    properties:
+      coords:
+        $ref: '#/definitions/model.Point'
+      name:
+        type: string
+    type: object
+host: localhost:80
+info:
+  contact:
+    email: msk.vitaly@gmail.com
+    name: Vitalii Popov
+    url: https://www.linkedin.com/in/mskVitalii/
+  description: Chemnitz open data map for Database & Web Technologies
+  title: DWT-Chemnitz-map
+  version: "1.0"
+paths:
+  /api/v1/claims:
+    get:
+      description: Fetches and returns the claims of the authenticated user.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response with user claims
+          schema:
+            $ref: '#/definitions/dto.GetUserClaimsResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.UnauthorizedResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/dto.UnauthorizedResponse'
+      security:
+      - BearerAuth: []
+      summary: Retrieves user claims
+      tags:
+      - auth
+  /api/v1/google/callback:
+    get:
+      responses: {}
+      summary: Used by Google Auth provider
+      tags:
+      - auth
+  /api/v1/google/login:
+    get:
+      responses: {}
+      summary: Used by Google Auth provider
+      tags:
+      - auth
+  /api/v1/healthcheck:
+    get:
+      description: Check if the service is healthy
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Perform health check
+      tags:
+      - service
+  /api/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user with email and password, and returns a JWT
+        token if the credentials are valid.
+      parameters:
+      - description: Login request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful login
+          schema:
+            $ref: '#/definitions/dto.SuccessLoginResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.UnauthorizedResponse'
+      summary: Authenticates a user and returns a JWT token
+      tags:
+      - auth
+  /api/v1/logout:
+    post:
+      description: Invalidates the JWT token for the user by adding it to the blacklist
+        and removes the JWT cookie.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful logout
+          schema:
+            $ref: '#/definitions/dto.SuccessLogoutResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+      summary: Logs out a user and invalidates the JWT token
+      tags:
+      - auth
+  /api/v1/place/{id}:
+    get:
+      description: Retrieves a place from the MongoDB database by its ID.
+      parameters:
+      - description: ID of the place to retrieve
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/dto.ReadPlacesResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+      summary: Retrieves a place by its ID
+      tags:
+      - places
+  /api/v1/refresh_token:
+    get:
+      description: Generates a new authentication token using the refresh token provided.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response with new token
+          schema:
+            $ref: '#/definitions/dto.SuccessRefreshTokenResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.UnauthorizedResponse'
+      security:
+      - BearerAuth: []
+      summary: Refreshes the authentication token
+      tags:
+      - auth
+  /api/v1/searchPlace:
+    post:
+      description: Get places with pagination support
+      parameters:
+      - description: List of category strings to filter places by.
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/dto.SearchPlacesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SearchPlacesResponse'
+        "400":
+          description: Invalid limit parameter
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+      summary: Filters places
+      tags:
+      - places
+  /api/v1/user:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new user in the MongoDB database.
+      parameters:
+      - description: User object to create
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/dto.CreateUserResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+      summary: Creates a new user
+      tags:
+      - users
+  /api/v1/user/{id}:
+    delete:
+      description: Deletes a user from the MongoDB database by its ID.
+      parameters:
+      - description: ID of the user to delete
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/dto.DeleteUserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.UnauthorizedResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Deletes a user by its ID
+      tags:
+      - users
+    get:
+      description: Retrieves a user from the MongoDB database by its ID.
+      parameters:
+      - description: ID of the user to retrieve
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/dto.GetUserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.UnauthorizedResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Retrieves a user by its ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Updates a user in the MongoDB database by its ID.
+      parameters:
+      - description: ID of the user to update
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: User object with updated data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: '#/definitions/dto.UpdateUserResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.UnauthorizedResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/lib.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Updates a user by its ID
+      tags:
+      - users
+  /metrics:
+    get:
+      description: Logs that are collected by prometheus and visualized in grafana
+      responses:
+        "200":
+          description: OK
+      summary: Prometheus logs
+      tags:
+      - service
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
