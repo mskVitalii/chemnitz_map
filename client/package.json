@@ -1,8 +1,12 @@
 {
-  "name": "dwt-chemnitz-map",
+  "name": "chemnitz-map",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {
+    "name": "Anastasiia Zibrova",
+    "url": "https://www.linkedin.com/in/anzania/"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
