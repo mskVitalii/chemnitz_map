@@ -1,7 +1,6 @@
 import API from "@app/api/api";
 import { IUserData } from "@app/interfaces/user";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 
 const fetchUserByID = async (id: string): Promise<IUserData> => {
   const res = await API.user.getByID(id);
@@ -23,7 +22,7 @@ export const useUserQuery = (id: string | undefined) => {
     queryKey: ["user", id],
     // @ts-ignore
     queryFn: () => fetchUserByID(id),
-    enabled: !!id,
+    enabled: !!id
   });
 };
 
@@ -32,6 +31,6 @@ export const useUserClaimsQuery = () => {
     queryKey: ["userClaims"],
     queryFn: () => fetchClaims(),
     staleTime: 100,
-    retry: false,
+    retry: false
   });
 };

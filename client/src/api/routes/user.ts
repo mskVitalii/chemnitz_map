@@ -1,4 +1,3 @@
-import { TCategory } from "@app/interfaces/places";
 import { IUserData } from "@app/interfaces/user";
 import { AxiosInstance } from "axios";
 
@@ -12,8 +11,10 @@ export const user = (
     getByID: async (id: string) =>
       (await ApiClient("Get user by id")).get(`/user/${id}`),
 
-    put: async (id: string, data: IUserData) => (await ApiClient("Update user")).put(`/user/${id}`, data),
+    put: async (id: string, data: IUserData) =>
+      (await ApiClient("Update user")).put(`/user/${id}`, data),
 
-    delete: async (id: string) => (await ApiClient("Delete user")).delete(`/user/${id}`),
+    delete: async (id: string) =>
+      (await ApiClient("Delete user")).delete(`/user/${id}`)
   };
 };

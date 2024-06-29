@@ -1,12 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
-import { Description, Field, Label, Switch } from "@headlessui/react";
-import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
-import { classNames } from "@app/utils/common";
 import API from "@app/api/api";
 import { IUserData } from "@app/interfaces/user";
-import { toast } from "react-toastify";
+import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
 import { useQueryClient } from "@tanstack/react-query";
 import { debounce } from "lodash";
+import { useMemo, useState } from "react";
+import { toast } from "react-toastify";
+
 import HomeSearchCard from "./HomeSearchCard";
 
 const AddHomeModal = ({ onClose }: { onClose: () => void }) => {
@@ -40,21 +39,21 @@ const AddHomeModal = ({ onClose }: { onClose: () => void }) => {
                 {
                   coords: {
                     x: +lon,
-                    y: +lat,
+                    y: +lat
                   },
-                  name: title,
-                },
+                  name: title
+                }
               ]
             : [
                 ...user.data.homes,
                 {
                   coords: {
                     x: +lon,
-                    y: +lat,
+                    y: +lat
                   },
-                  name: title,
-                },
-              ],
+                  name: title
+                }
+              ]
       };
       API.user.put(user.data._id, data).then(() => {
         toast.success("Home successfully added");
@@ -95,6 +94,7 @@ const AddHomeModal = ({ onClose }: { onClose: () => void }) => {
           <div className="flex flex-col w-full space-y-4">
             {searchResults.map((place) => (
               <HomeSearchCard
+                key={`${place.display_name}-${place.lat}-${place.lon}`}
                 title={place.display_name}
                 lat={place.lat}
                 lon={place.lon}

@@ -1,15 +1,16 @@
 import { ToastErrorTemplate } from "@app/components/Containers/ToastErrorTemplate";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { toast } from "react-toastify";
-import { places } from "./routes/places";
-import { user } from "./routes/user";
+
 import { auth } from "./routes/auth";
 import { nominatim } from "./routes/nominatim";
+import { places } from "./routes/places";
+import { user } from "./routes/user";
 
 const ApiClient = async (methodName = ""): Promise<AxiosInstance> => {
   const config: AxiosRequestConfig = {
     baseURL: "http://localhost:80/api/v1",
-    withCredentials: true,
+    withCredentials: true
   };
 
   const a = axios.create(config);
@@ -18,9 +19,9 @@ const ApiClient = async (methodName = ""): Promise<AxiosInstance> => {
     (response) => response,
     (error: AxiosError) => {
       if (error.response?.status === 401) {
-        toast.error('Unathorized');
+        toast.error("Unathorized");
       } else if (error.response?.status === 403) {
-        toast.error('Forbidden');
+        toast.error("Forbidden");
       } else {
         toast.error(ToastErrorTemplate(methodName, error));
       }
@@ -33,7 +34,7 @@ const ApiClient = async (methodName = ""): Promise<AxiosInstance> => {
 
 const ApiClientOuter = async (methodName = ""): Promise<AxiosInstance> => {
   const config: AxiosRequestConfig = {
-    baseURL: "",
+    baseURL: ""
   };
 
   const a = axios.create(config);
@@ -56,8 +57,8 @@ const API = {
   places: places(ApiClient),
   user: user(ApiClient),
   external: {
-    nominatim: nominatim(ApiClientOuter),
-  },
+    nominatim: nominatim(ApiClientOuter)
+  }
 };
 
 export default API;

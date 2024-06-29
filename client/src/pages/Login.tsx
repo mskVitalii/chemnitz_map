@@ -5,7 +5,7 @@ import {
   EnvelopeIcon,
   EyeIcon,
   EyeSlashIcon,
-  LockClosedIcon,
+  LockClosedIcon
 } from "@heroicons/react/20/solid";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ function LoginPage() {
 
   const validationSchema = yup.object().shape({
     email: yup.string().email().required(),
-    password: yup.string().required(),
+    password: yup.string().required()
   });
 
   const handleShowClick = () => {
@@ -45,7 +45,7 @@ function LoginPage() {
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
+      password: ""
     },
     validationSchema,
     validateOnChange: false,
@@ -53,20 +53,20 @@ function LoginPage() {
     onSubmit: async (values) => {
       const loginData: ILoginData = {
         email: values.email,
-        password: values.password,
+        password: values.password
       };
 
       await API.auth.login(loginData).then(() => {
         navigate("/", { replace: true });
       });
-    },
+    }
   });
 
   return (
     <UserLogin title="Log in">
       <div className="pt-5 flex justify-center mb-5 mt-[-5px]">
         <p className="text-slate-600 text-base font-normal line-clamp-3">
-          Don't have an account?
+          Don&apos;t have an account?
         </p>
         <Link to="/registration">
           <p className="ml-2 text-cyan-600 text-base line-clamp-3 font-semibold">

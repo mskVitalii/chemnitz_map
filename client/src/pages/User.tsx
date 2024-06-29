@@ -1,3 +1,14 @@
+import API from "@app/api/api";
+import AddHomeModal from "@app/components/Containers/AddHomeModal";
+import DeleteConfirmModal from "@app/components/Containers/DeleteConfirmModal";
+import HomeCard from "@app/components/Containers/HomeCard";
+import ModalTemplate from "@app/components/Containers/ModalTemplate";
+import UserAccountTypeModal from "@app/components/Containers/UserAcountTypeModal";
+import { IHome, IUserData } from "@app/interfaces/user";
+import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
+import { classNames } from "@app/utils/common";
+import logo from "@assets/logo.svg";
+import avatar from "@assets/user.svg";
 import {
   Disclosure,
   DisclosureButton,
@@ -6,32 +17,14 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-  Transition,
+  Transition
 } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
-import logo from "@assets/logo.svg";
-import avatar from "@assets/user.svg";
-import { Map } from "@app/components/Map/Map";
-import CategotySelect from "@app/components/Interactive/CategorySelect";
-import { useEffect, useState } from "react";
-import { usePlaceQuery, usePlacesListQuery } from "@app/state/place";
-import { ICategoryUI } from "@app/interfaces/places";
-import { useQueryClient } from "@tanstack/react-query";
-import ModalTemplate from "@app/components/Containers/ModalTemplate";
-import POIModal from "@app/components/Containers/POIModal";
-import { isEmpty } from "lodash";
-import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
-import API from "@app/api/api";
-import { toast } from "react-toastify";
 import { HomeIcon } from "@heroicons/react/20/solid";
-import { classNames } from "@app/utils/common";
-import UserAccountTypeModal from "@app/components/Containers/UserAcountTypeModal";
-import AddHomeModal from "@app/components/Containers/AddHomeModal";
-import { IHome, IUserData } from "@app/interfaces/user";
-import HomeCard from "@app/components/Containers/HomeCard";
-import DeleteConfirmModal from "@app/components/Containers/DeleteConfirmModal";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const pages = [{ name: "Profile settings", href: "/profile", current: true }];
 
@@ -58,7 +51,7 @@ const UserPage = () => {
             confirm={() => {
               if (user.data?._id) {
                 API.user.delete(user.data._id).then(() => {
-                  navigate("/login")
+                  navigate("/login");
                   toast.info("Account successfully deleted");
                 });
               }
@@ -296,7 +289,7 @@ const UserPage = () => {
             )}
           </Disclosure>
           <nav className="flex mt-6 w-full pb-3" aria-label="Breadcrumb">
-            <ol role="list" className="flex space-x-4 rounded-md bg-white px-6">
+            <ol className="flex space-x-4 rounded-md bg-white px-6">
               <li className="flex">
                 <div className="flex items-center">
                   <a href="/" className="text-gray-400 hover:text-gray-500">
@@ -401,12 +394,13 @@ const UserPage = () => {
               {user.data?.userType === "pro"
                 ? "Add home"
                 : user.data?.homes.length === 0
-                ? "Add home"
-                : "Swith home point"}
+                  ? "Add home"
+                  : "Swith home point"}
             </button>
             <div className="flex flex-col w-full space-y-4 mt-4">
               {user.data?.homes.map((home: IHome, idx: number) => (
                 <HomeCard
+                  key={`${home.name}-${home.coords.y}-${home.coords.x}`}
                   title={home.name}
                   lat={home.coords.y}
                   lon={home.coords.x}
@@ -414,7 +408,7 @@ const UserPage = () => {
                     if (user.data?._id) {
                       const data: IUserData = {
                         ...user.data,
-                        homes: user.data.homes.filter((el, i) => i !== idx),
+                        homes: user.data.homes.filter((_, i) => i !== idx)
                       };
                       // @ts-ignore
                       API.user.put(user.data._id, data).then(() => {

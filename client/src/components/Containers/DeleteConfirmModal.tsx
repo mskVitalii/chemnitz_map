@@ -1,5 +1,6 @@
-import { DialogTitle } from '@headlessui/react';
-import ModalTemplate from './ModalTemplate';
+import { DialogTitle } from "@headlessui/react";
+
+import ModalTemplate from "./ModalTemplate";
 
 interface IDeleteConfirmModal {
   isOpen: boolean;
@@ -8,7 +9,12 @@ interface IDeleteConfirmModal {
   deleteTarget: string;
 }
 
-const DeleteConfirmModal = ({ isOpen, onClose, confirm, deleteTarget }: IDeleteConfirmModal) => {
+const DeleteConfirmModal = ({
+  isOpen,
+  onClose,
+  confirm,
+  deleteTarget
+}: IDeleteConfirmModal) => {
   return (
     <ModalTemplate isOpen={isOpen} onClose={onClose}>
       <>

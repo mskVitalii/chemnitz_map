@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
 import logo from "@assets/logo.svg";
+import { ReactNode } from "react";
 
 interface IUserLayout {
   children: ReactNode;

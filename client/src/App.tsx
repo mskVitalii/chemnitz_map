@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/Home";
-import RegistrationPage from "./pages/Registration";
-import LoginPage from "./pages/Login";
+
 import ProtectedRoute from "./components/Routes/ProtectedRoute";
+import HomePage from "./pages/Home";
+import LoginPage from "./pages/Login";
+import RegistrationPage from "./pages/Registration";
 import UserPage from "./pages/User";
 
 function App() {

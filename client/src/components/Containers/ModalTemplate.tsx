@@ -1,4 +1,9 @@
-import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild
+} from "@headlessui/react";
 import { Fragment, ReactElement, useRef } from "react";
 
 interface IProps {
@@ -12,7 +17,7 @@ function ModalTemplate({
   isOpen,
   onClose,
   children,
-  dialogSize = "medium",
+  dialogSize = "medium"
 }: IProps) {
   const cancelButtonRef = useRef(null);
 

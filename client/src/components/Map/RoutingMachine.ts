@@ -1,7 +1,8 @@
-import { IRoute } from "@app/interfaces/places";
-import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+
+import { IRoute } from "@app/interfaces/places";
+import L from "leaflet";
 import { useEffect, useState } from "react";
 import { useMap } from "react-leaflet";
 
@@ -16,9 +17,9 @@ const RoutineMachineLayer = ({ route }: { route: IRoute }) => {
         L.Routing.control({
           waypoints: [
             L.latLng(route.dest.y, route.dest.x),
-            L.latLng(route.src.y, route.src.x),
+            L.latLng(route.src.y, route.src.x)
           ],
-          draggableWaypoints: false,
+          draggableWaypoints: false
         })
       );
     }

@@ -1,5 +1,3 @@
-import { TCategory } from "@app/interfaces/places";
-import { ILoginData, IUserData } from "@app/interfaces/user";
 import { AxiosInstance } from "axios";
 
 export const nominatim = (
@@ -13,6 +11,6 @@ export const nominatim = (
     getCoords: async (s: string) =>
       (await ApiClient("Get point coordinates")).get(
         `https://nominatim.openstreetmap.org/search?q=${s}&format=json&accept-language=en`
-      ),
+      )
   };
 };

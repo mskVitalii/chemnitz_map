@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { Description, Field, Label, Switch } from "@headlessui/react";
-import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
-import { classNames } from "@app/utils/common";
 import API from "@app/api/api";
 import { IUserData } from "@app/interfaces/user";
-import { toast } from "react-toastify";
+import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
+import { classNames } from "@app/utils/common";
+import { Description, Field, Label, Switch } from "@headlessui/react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const UserAccountTypeModal = () => {
   const [isPro, setIsPro] = useState(false);
@@ -27,7 +27,7 @@ const UserAccountTypeModal = () => {
 
       const data: IUserData = {
         ...user.data,
-        userType: val ? "pro" : "regular",
+        userType: val ? "pro" : "regular"
       };
       API.user.put(user.data._id, data).then(() => {
         toast.success("Account type updated");
@@ -49,8 +49,8 @@ const UserAccountTypeModal = () => {
         <div className="mt-2 sm:flex sm:items-start sm:justify-between">
           <div className="max-w-xl text-sm text-gray-500">
             <Description>
-              Subscription "pro" allows you to add an unlimited amount of favourite and home
-              points
+              Subscription &quot;pro&quot; allows you to add an unlimited amount
+              of favourite and home points
             </Description>
           </div>
           <div className="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">

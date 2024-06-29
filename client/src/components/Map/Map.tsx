@@ -1,22 +1,18 @@
-import { ICategoryUI, IPlace, IRoute } from "@app/interfaces/places";
-import { usePlacesListQuery } from "@app/state/place";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import markerBlue from "./markers/markerBlue";
-import markerGreen from "./markers/markerGreen";
-import markerOrange from "./markers/markerOrange";
-import { LeafletMouseEvent } from "leaflet";
-import markerViolet from "./markers/markerViolet";
-import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
-import favourite from "./markers/markerFavourite";
-import { IFav, IHome } from "@app/interfaces/user";
-import markerFavourite from "./markers/markerFavourite";
-import markerHome from "./markers/markerHome";
-
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-import { createControlComponent } from "@react-leaflet/core";
 import "leaflet-routing-machine";
-import { ReactElement, useEffect, useState } from "react";
-import createRoutineMachineLayer from "./RoutingMachine";
+
+import { ICategoryUI, IPlace, IRoute } from "@app/interfaces/places";
+import { IFav, IHome } from "@app/interfaces/user";
+import { usePlacesListQuery } from "@app/state/place";
+import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
+
+import markerBlue from "./markers/markerBlue";
+import markerFavourite from "./markers/markerFavourite";
+import markerGreen from "./markers/markerGreen";
+import markerHome from "./markers/markerHome";
+import markerOrange from "./markers/markerOrange";
+import markerViolet from "./markers/markerViolet";
 import RoutineMachineLayer from "./RoutingMachine";
 
 export const Map = ({
@@ -24,7 +20,7 @@ export const Map = ({
   setPlaceId,
   showHome,
   showFav,
-  route,
+  route
 }: {
   selected: ICategoryUI[];
   setPlaceId: (data: string) => void;
@@ -60,13 +56,13 @@ export const Map = ({
             place.category === "Jugendberufshilfen"
               ? markerBlue
               : place.category === "Kindertageseinrichtungen"
-              ? markerGreen
-              : place.category === "Schulen"
-              ? markerViolet
-              : markerOrange
+                ? markerGreen
+                : place.category === "Schulen"
+                  ? markerViolet
+                  : markerOrange
           }
           eventHandlers={{
-            click: () => setPlaceId(place._id),
+            click: () => setPlaceId(place._id)
           }}
         ></Marker>
       ))}
@@ -77,7 +73,7 @@ export const Map = ({
             position={[place.coords.y, place.coords.x]}
             icon={markerFavourite}
             eventHandlers={{
-              click: () => setPlaceId(place._id),
+              click: () => setPlaceId(place._id)
             }}
           ></Marker>
         ))}

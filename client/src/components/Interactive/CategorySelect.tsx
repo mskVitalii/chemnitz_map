@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { ICategoryUI } from "@app/interfaces/places";
 import {
   Label,
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-  Transition,
+  Transition
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { ICategoryUI } from "@app/interfaces/places";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -17,7 +16,7 @@ function classNames(...classes: string[]) {
 export default function CategotySelect({
   categories,
   selected,
-  setSelected,
+  setSelected
 }: {
   categories: any;
   selected: ICategoryUI[];
@@ -72,7 +71,7 @@ export default function CategotySelect({
                           <span
                             className="h-2 w-2 min-h-2 min-w-2 mt-1 mr-1 md:mr-2 rounded-full"
                             style={{
-                              backgroundColor: category.color,
+                              backgroundColor: category.color
                             }}
                           ></span>
                           <span

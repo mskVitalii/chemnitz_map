@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
-import { Description, Field, Label, Switch } from "@headlessui/react";
-import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
-import { classNames } from "@app/utils/common";
-import API from "@app/api/api";
-import { IUserData } from "@app/interfaces/user";
-import { toast } from "react-toastify";
-import { useQueryClient } from "@tanstack/react-query";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 
 const HomeCard = ({
   title,
   lat,
   lon,
-  deleteHandler,
+  deleteHandler
 }: {
   title: string;
   lat: number;

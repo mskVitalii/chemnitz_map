@@ -1,25 +1,26 @@
+import API from "@app/api/api";
+import { IRoute, TCategory } from "@app/interfaces/places";
+import { IHome, IUserData } from "@app/interfaces/user";
+import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
+import { haversineDistance } from "@app/utils/common";
 import {
   EnvelopeIcon,
-  MapPinIcon,
-  PhoneIcon,
   HeartIcon as HeartIconFull,
+  MapPinIcon,
+  PhoneIcon
 } from "@heroicons/react/20/solid";
-import { useEffect, useState } from "react";
-import ModalTemplate from "./ModalTemplate";
-import JsonToForm from "./JsonToForm";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
-import { IHome, IUserData } from "@app/interfaces/user";
-import { IRoute, TCategory } from "@app/interfaces/places";
-import API from "@app/api/api";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { haversineDistance } from "@app/utils/common";
+
+import JsonToForm from "./JsonToForm";
+import ModalTemplate from "./ModalTemplate";
 
 const POIModal = ({
   jsonData,
   setRoute,
-  onClose,
+  onClose
 }: {
   jsonData: any;
   setRoute: (val: IRoute) => void;
@@ -35,13 +36,13 @@ const POIModal = ({
 
   useEffect(() => {
     if (user.data?.favourites.length) {
-      let isFavFlag = false
+      let isFavFlag = false;
       user.data.favourites.map((elem) => {
         if (elem._id === jsonData._id) {
-          isFavFlag = true
+          isFavFlag = true;
         }
-      })
-      setIsFav(isFavFlag)
+      });
+      setIsFav(isFavFlag);
     }
   }, [user.data]);
 
@@ -63,10 +64,10 @@ const POIModal = ({
                       _id: id,
                       coords: {
                         x,
-                        y,
+                        y
                       },
-                      category,
-                    },
+                      category
+                    }
                   ]
                 : [
                     ...user.data.favourites,
@@ -74,11 +75,11 @@ const POIModal = ({
                       _id: id,
                       coords: {
                         x,
-                        y,
+                        y
                       },
-                      category,
-                    },
-                  ],
+                      category
+                    }
+                  ]
           };
           // @ts-ignore
           API.user.put(user.data._id, data).then(() => {
@@ -91,7 +92,7 @@ const POIModal = ({
           {
             const data: IUserData = {
               ...user.data,
-              favourites: user.data.favourites.filter((el) => el._id !== id),
+              favourites: user.data.favourites.filter((el) => el._id !== id)
             };
             // @ts-ignore
             API.user.put(user.data._id, data).then(() => {
@@ -143,12 +144,12 @@ const POIModal = ({
         {jsonData.category === "Schulen"
           ? `Scools (Schulen) - ${jsonData.other.art}`
           : jsonData.category === "Jugendberufshilfen"
-          ? "Social teenager projects (Jugendberufshilfen)"
-          : jsonData.category === "Schulsozialarbeit"
-          ? "Social child projects (Schulsozialarbeit)"
-          : jsonData.category === "Kindertageseinrichtungen"
-          ? "Kindergarten (Kindertageseinrichtungen)"
-          : "Other"}
+            ? "Social teenager projects (Jugendberufshilfen)"
+            : jsonData.category === "Schulsozialarbeit"
+              ? "Social child projects (Schulsozialarbeit)"
+              : jsonData.category === "Kindertageseinrichtungen"
+                ? "Kindergarten (Kindertageseinrichtungen)"
+                : "Other"}
       </h4>
       <div className="mt-2 flex flex-row justify-start items-center max-w-2xl text-xs leading-6 text-gray-500">
         <MapPinIcon className="h-3 w-3 mr-2" />
@@ -248,6 +249,7 @@ const POIModal = ({
                   href={`https://${jsonData.other.www}`}
                   target="_blank"
                   className="text-blue-500 cursor-pointer"
+                  rel="noreferrer"
                 >
                   {jsonData.other.www}
                 </a>
@@ -315,8 +317,11 @@ const POIModal = ({
             </dt>
             <dd className="mt-1 text-sm text-left leading-6 divide-y space-y-2 text-gray-700 sm:col-span-2 sm:mt-0">
               {user.data?.homes.length && jsonData.coords
-                ? user.data.homes.map((home: IHome) => (
-                    <div className="flex flex-row justify-between pt-2 space-x-4 w-full border-gray-300">
+                ? user.data.homes.map((home) => (
+                    <div
+                      key={`${home.name}-${home.coords.y}-${home.coords.x}`}
+                      className="flex flex-row justify-between pt-2 space-x-4 w-full border-gray-300"
+                    >
                       <p>
                         <b>{`${home.name}`}</b>
                         {` - ${+haversineDistance(
@@ -342,19 +347,22 @@ const POIModal = ({
             <dd className="mt-1 text-sm text-left leading-6 divide-y space-y-2 text-gray-700 sm:col-span-2 sm:mt-0">
               {user.data?.homes.length && jsonData.coords
                 ? user.data.homes.map((home: IHome) => (
-                    <div className="flex flex-row justify-between pt-2 space-x-4 w-full border-gray-300">
+                    <div
+                      key={`${home.name}-${home.coords.y}-${home.coords.x}`}
+                      className="flex flex-row justify-between pt-2 space-x-4 w-full border-gray-300"
+                    >
                       <p>{`${home.name}`}</p>
                       <button
                         onClick={() => {
                           setRoute({
                             src: {
                               x: home.coords.x,
-                              y: home.coords.y,
+                              y: home.coords.y
                             },
                             dest: {
                               x: jsonData.coords.x,
-                              y: jsonData.coords.y,
-                            },
+                              y: jsonData.coords.y
+                            }
                           });
                           onClose();
                         }}

@@ -2,7 +2,12 @@ export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+export function haversineDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number {
   // Radius of the Earth in kilometers
   const R = 6371.0;
 
@@ -19,7 +24,9 @@ export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2
   const dlon = lon2Rad - lon1Rad;
 
   // Haversine formula
-  const a = Math.sin(dlat / 2) ** 2 + Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(dlon / 2) ** 2;
+  const a =
+    Math.sin(dlat / 2) ** 2 +
+    Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(dlon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   // Distance in kilometers

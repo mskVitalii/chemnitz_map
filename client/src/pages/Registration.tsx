@@ -5,8 +5,7 @@ import {
   EnvelopeIcon,
   EyeIcon,
   EyeSlashIcon,
-  LockClosedIcon,
-  UserCircleIcon,
+  LockClosedIcon
 } from "@heroicons/react/20/solid";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -30,7 +29,7 @@ function RegistrationPage() {
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "Passwords do not match")
-      .required(),
+      .required()
   });
 
   const handleShowClick = () => {
@@ -41,7 +40,7 @@ function RegistrationPage() {
     initialValues: {
       email: "",
       password: "",
-      confirmPassword: "",
+      confirmPassword: ""
     },
     validationSchema,
     validateOnChange: false,
@@ -53,7 +52,7 @@ function RegistrationPage() {
         favourites: [],
         homes: [],
         status: "active",
-        userType: "regular",
+        userType: "regular"
       };
 
       await API.user
@@ -64,7 +63,7 @@ function RegistrationPage() {
         .catch((err) => {
           toast.error(`${err}`);
         });
-    },
+    }
   });
 
   return (

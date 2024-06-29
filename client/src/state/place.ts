@@ -23,7 +23,7 @@ const fetchPlaceByID = async (id: string | undefined) => {
 export const usePlacesListQuery = (categories: TCategory[]) => {
   return useQuery({
     queryKey: ["placesList", categories],
-    queryFn: () => fetchPlacesList(categories),
+    queryFn: () => fetchPlacesList(categories)
   });
 };
 

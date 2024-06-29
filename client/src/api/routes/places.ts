@@ -9,10 +9,10 @@ export const places = (
       (await ApiClient("Get POI list")).post(`/searchPlace`, {
         HasEmail: "false",
         categories,
-        isBarrierFree: "false",
+        isBarrierFree: "false"
       }),
 
     getByID: async (id: string) =>
-      (await ApiClient("Get POI by id")).get(`/place/${id}`),
+      (await ApiClient("Get POI by id")).get(`/place/${id}`)
   };
 };

@@ -1,3 +1,14 @@
+import API from "@app/api/api";
+import ModalTemplate from "@app/components/Containers/ModalTemplate";
+import POIModal from "@app/components/Containers/POIModal";
+import CategotySelect from "@app/components/Interactive/CategorySelect";
+import { Map } from "@app/components/Map/Map";
+import { ICategoryUI, IRoute } from "@app/interfaces/places";
+import { usePlaceQuery } from "@app/state/place";
+import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
+import { classNames } from "@app/utils/common";
+import logo from "@assets/logo.svg";
+import avatar from "@assets/user.svg";
 import {
   Disclosure,
   DisclosureButton,
@@ -9,33 +20,14 @@ import {
   MenuItem,
   MenuItems,
   Switch,
-  Transition,
+  Transition
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
-import logo from "@assets/logo.svg";
-import avatar from "@assets/user.svg";
-import { Map } from "@app/components/Map/Map";
-import CategotySelect from "@app/components/Interactive/CategorySelect";
-import { useEffect, useState } from "react";
-import { usePlaceQuery, usePlacesListQuery } from "@app/state/place";
-import { ICategoryUI, IRoute } from "@app/interfaces/places";
 import { useQueryClient } from "@tanstack/react-query";
-import ModalTemplate from "@app/components/Containers/ModalTemplate";
-import POIModal from "@app/components/Containers/POIModal";
 import { isEmpty } from "lodash";
-import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
-import API from "@app/api/api";
-import { toast } from "react-toastify";
-import { classNames } from "@app/utils/common";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
+import { toast } from "react-toastify";
 
 const categories: ICategoryUI[] = [
   { name: "Schools", secondary: "Schule", value: "Schulen", color: "#7c3aed" },
@@ -43,20 +35,20 @@ const categories: ICategoryUI[] = [
     name: "Kindergarten",
     secondary: "Kindertageseinrichtungen",
     value: "Kindertageseinrichtungen",
-    color: "#16a34a",
+    color: "#16a34a"
   },
   {
     name: "Social child projects",
     secondary: "Schulsozialarbeit",
     value: "Schulsozialarbeit",
-    color: "#f97316",
+    color: "#f97316"
   },
   {
     name: "Social teenager projects",
     secondary: "Jugendberufshilfe",
     value: "Jugendberufshilfen",
-    color: "#2563eb",
-  },
+    color: "#2563eb"
+  }
 ];
 
 function HomePage() {
