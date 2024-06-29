@@ -1,19 +1,18 @@
 import { useUserClaimsQuery } from "@app/state/user";
 import Loader from "@components/Loaders/Loader";
-import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 function ProtectedRoute() {
   const userClaims = useUserClaimsQuery();
-  useEffect(() => {
-    userClaims.refetch();
-  }, []);
-
-  if (userClaims.isLoading || userClaims.isRefetching) {
+  if (userClaims.isLoading) {
     return <Loader />;
   }
+  if (userClaims.isError) {
+    console.log("[ProtectedRoute] userClaims.isError", userClaims.isError);
+    return <Navigate to="/login" replace />;
+  }
 
-  return userClaims.data?.id ? <Outlet /> : <Navigate to="/login" replace />;
+  return <Outlet />;
 }
 
 export default ProtectedRoute;

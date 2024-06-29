@@ -8,13 +8,8 @@ const fetchUserByID = async (id: string): Promise<IUserData> => {
 };
 
 const fetchClaims = async () => {
-  try {
-    const res = await API.auth.claims();
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    return null;
-  }
+  const res = await API.auth.claims();
+  return res.data;
 };
 
 export const useUserQuery = (id: string | undefined) => {
@@ -30,7 +25,6 @@ export const useUserClaimsQuery = () => {
   return useQuery({
     queryKey: ["userClaims"],
     queryFn: () => fetchClaims(),
-    staleTime: 100,
     retry: false
   });
 };

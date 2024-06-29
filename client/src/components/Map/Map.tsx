@@ -1,18 +1,17 @@
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-import "leaflet-routing-machine";
-
+/* eslint-disable simple-import-sort/imports */
 import { ICategoryUI, IPlace, IRoute } from "@app/interfaces/places";
-import { IFav, IHome } from "@app/interfaces/user";
 import { usePlacesListQuery } from "@app/state/place";
-import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
-
 import markerBlue from "./markers/markerBlue";
-import markerFavourite from "./markers/markerFavourite";
 import markerGreen from "./markers/markerGreen";
-import markerHome from "./markers/markerHome";
 import markerOrange from "./markers/markerOrange";
 import markerViolet from "./markers/markerViolet";
+import { useUserClaimsQuery, useUserQuery } from "@app/state/user";
+import { IFav, IHome } from "@app/interfaces/user";
+import markerFavourite from "./markers/markerFavourite";
+import markerHome from "./markers/markerHome";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+import "leaflet-routing-machine";
 import RoutineMachineLayer from "./RoutingMachine";
 
 export const Map = ({
@@ -64,7 +63,7 @@ export const Map = ({
           eventHandlers={{
             click: () => setPlaceId(place._id)
           }}
-        ></Marker>
+        />
       ))}
       {showFav &&
         user.data?.favourites.map((place: IFav) => (
@@ -75,7 +74,7 @@ export const Map = ({
             eventHandlers={{
               click: () => setPlaceId(place._id)
             }}
-          ></Marker>
+          />
         ))}
       {showHome &&
         user.data?.homes.map((place: IHome) => (
@@ -83,7 +82,7 @@ export const Map = ({
             key={`place-marker-${place.name}`}
             position={[place.coords.y, place.coords.x]}
             icon={markerHome}
-          ></Marker>
+          />
         ))}
       {route && <RoutineMachineLayer route={route} />}
     </MapContainer>
