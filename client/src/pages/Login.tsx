@@ -1,6 +1,6 @@
 import API from "@app/api/api";
 import UserLogin from "@app/components/Containers/UserLogin";
-import { ILoginData, IUserData } from "@app/interfaces/user";
+import { ILoginData } from "@app/interfaces/user";
 import {
   EnvelopeIcon,
   EyeIcon,
@@ -30,10 +30,10 @@ function LoginPage() {
   useEffect(() => {
     if (errStatus) {
       switch (errStatus) {
-        case 'user-deleted':
+        case "user-deleted":
           toast.error("This account is deleted. Contact support to restore");
           break;
-        case 'google-error':
+        case "google-error":
           toast.error("Google authentication error");
           break;
         default:
@@ -56,11 +56,9 @@ function LoginPage() {
         password: values.password,
       };
 
-      await API.auth
-        .login(loginData)
-        .then(() => {
-          navigate("/");
-        })
+      await API.auth.login(loginData).then(() => {
+        navigate("/", { replace: true });
+      });
     },
   });
 
