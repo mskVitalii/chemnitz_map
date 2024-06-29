@@ -54,8 +54,8 @@ const categories: ICategoryUI[] = [
 function HomePage() {
   const [selected, setSelected] = useState<ICategoryUI[]>([]);
   const [currPlaceId, setCurrPlaceId] = useState<string>();
-  const [showFav, setShowFav] = useState<boolean>(false);
-  const [showHome, setShowHome] = useState<boolean>(false);
+  const [showFav, setShowFav] = useState<boolean>(true);
+  const [showHome, setShowHome] = useState<boolean>(true);
 
   const [route, setRoute] = useState<IRoute>();
 
