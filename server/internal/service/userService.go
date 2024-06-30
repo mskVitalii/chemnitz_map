@@ -181,7 +181,8 @@ func (s *userService) UpdateUser(c *gin.Context) {
 		lib.ResponseBadRequest(c, errors.New("Invalid email"), "Invalid email")
 		return
 	}
-	if lib.IsValidPassword(user.Password) == false {
+
+	if lib.IsValidPassword(user.Password) == false && model.ProviderInUserProviders(model.UserProviders.Email, user.Providers) {
 		lib.ResponseBadRequest(c, errors.New("Invalid password"), "Invalid password")
 		return
 	}
