@@ -15,8 +15,8 @@ COPY --from=builder /app/main .
 COPY --from=builder /app/app.yml .
 COPY --from=builder /app/resources/datasets/ ./resources/datasets/
 
-EXPOSE 80
+EXPOSE 8080
 CMD ["/app/main"]
 
 #HEALTHCHECK --interval=3s --timeout=3s --start-period=1s --retries=3 \
-#  CMD wget -q --spider http://localhost:80/service/healthcheck || exit 1
+#  CMD wget -q --spider http://localhost:8080/service/healthcheck || exit 1

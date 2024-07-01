@@ -1,9 +1,8 @@
 service: "chemnitz-maps"
-port: 80
+port: 8080
 host: "localhost"
 protocol: "http"
 datasets_path: "resources/datasets"
-frontend_url: "http://localhost:3000"
 grafana_slow_request: 3
 sentry_dsn: "https://62a8ffe95314bf483480b7666fba1445@o4507007597740032.ingest.us.sentry.io/4507340533137408"
 sentry_enable_tracing: true

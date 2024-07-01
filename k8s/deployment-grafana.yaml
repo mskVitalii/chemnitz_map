@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: chemnitz-map
+          volumeMounts:
+            - name: grafana-storage
+              mountPath: /var/lib/grafana
+            - name: grafana-config
+              mountPath: /etc/grafana/provisioning/datasources/datasources.yaml
+              subPath: grafana.yml
+            - name: grafana-dashboards
+              mountPath: /etc/grafana/provisioning/dashboards/dashboards.yaml
+              subPath: dashboards.yaml
+            - name: grafana-dashboard-json
+              mountPath: /var/lib/grafana/dashboards/dashboard.json
+              subPath: dashboards.json
+      volumes:
+        - name: grafana-storage
+          emptyDir: {}
+        - name: grafana-config
+          configMap:
+            name: grafana-config
+        - name: grafana-dashboards
+          configMap:
+            name: grafana-dashboards
+        - name: grafana-dashboard-json
+          configMap:
+            name: grafana-dashboard

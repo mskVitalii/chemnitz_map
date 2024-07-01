@@ -12,9 +12,8 @@ import (
 // AppConfig - app.yml for service const values
 type AppConfig struct {
 	Service                string  `yaml:"service" env-required:"true" json:"service"`
-	Port                   string  `yaml:"port" env-default:"80" json:"port,omitempty"`
+	Port                   string  `yaml:"port" env-default:"8080" json:"port,omitempty"`
 	DatasetsPath           string  `yaml:"datasets_path" env-required:"true" json:"datasetsPath"`
-	FrontendUrl            string  `yaml:"frontend_url" env-required:"true" json:"frontendUrl"`
 	Host                   string  `yaml:"host" env-required:"true" json:"host"`
 	Protocol               string  `yaml:"protocol" env-required:"true" json:"protocol"`
 	GrafanaSlowRequest     int32   `yaml:"grafana_slow_request" env-required:"true" json:"grafanaSlowRequest"`
@@ -54,6 +53,7 @@ type Config struct {
 	Jaeger                 JaegerConfig
 	PyroscopeServerAddress string
 	LokiURL                string
+	FrontendUrl            string
 }
 
 const configPath = "app.yml"
@@ -121,6 +121,7 @@ func GetConfig(rootPath string) *Config {
 
 		instance.PyroscopeServerAddress = getEnvKey("PYROSCOPE_SERVER_ADDRESS")
 		instance.LokiURL = getEnvKey("LOKI_URL")
+		instance.FrontendUrl = getEnvKey("FRONTEND_URL")
 	})
 	return instance
 }

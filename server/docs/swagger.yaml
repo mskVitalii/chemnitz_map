@@ -218,7 +218,6 @@ definitions:
       name:
         type: string
     type: object
-host: localhost:80
 info:
   contact:
     email: msk.vitaly@gmail.com

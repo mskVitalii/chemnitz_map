@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chemnitz-map-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chemnitz-map-client
+  template:
+    metadata:
+      labels:
+        app: chemnitz-map-client
+    spec:
+      containers:
+        - name: chemnitz-map-client
+          image: mskkote/chemnitz-map-client:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: chemnitz-map
+          env:
+            - name: NODE_ENV
+              value: "production"

@@ -1,6 +1,7 @@
 import API from "@app/api/api";
 import UserLogin from "@app/components/Containers/UserLogin";
 import { ILoginData } from "@app/interfaces/user";
+import configuration from "@app/utils/config";
 import {
   EnvelopeIcon,
   EyeIcon,
@@ -140,7 +141,8 @@ function LoginPage() {
             className="w-full p-3 bg-slate-200 hover:bg-slate-300 text-gray-700"
             onClick={(e) => {
               e.preventDefault();
-              window.location.href = "http://localhost:80/api/v1/google/login";
+              window.location.href =
+                configuration.baseUrl + "/api/v1/google/login";
             }}
           >
             Log in via Google

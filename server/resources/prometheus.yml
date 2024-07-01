@@ -5,9 +5,9 @@ scrape_configs:
   - job_name: 'chemnitz_maps_dev'
     metrics_path: '/metrics'
     static_configs:
-      - targets: ['localhost:80']
+      - targets: ['localhost:8080']
 
   - job_name: 'chemnitz_maps_prod'
     metrics_path: '/metrics'
     static_configs:
-      - targets: ['chemnitz_map_server:80']
+      - targets: ['chemnitz-map-server:8080']

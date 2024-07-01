@@ -1,4 +1,5 @@
 import { ToastErrorTemplate } from "@app/components/Containers/ToastErrorTemplate";
+import configuration from "@app/utils/config";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { toast } from "react-toastify";
 
@@ -9,7 +10,7 @@ import { user } from "./routes/user";
 
 const ApiClient = async (methodName = ""): Promise<AxiosInstance> => {
   const config: AxiosRequestConfig = {
-    baseURL: "http://localhost:80/api/v1",
+    baseURL: configuration.baseUrl + "/api/v1",
     withCredentials: true
   };
 

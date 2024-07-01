@@ -45,7 +45,7 @@ All commands via `make <command>`:
 ## Links
 
 - [Frontend](http://localhost:3000)
-- [Swagger](http://localhost:80/swagger/index.html)
+- [Swagger](http://localhost:8080/swagger/index.html)
 - [Grafana & Loki](http://localhost:3030)
 - [Prometheus](http://localhost:9090/)
 - [Jaeger](http://localhost:16686/)

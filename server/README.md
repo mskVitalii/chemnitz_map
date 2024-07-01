@@ -13,7 +13,7 @@ docker compose watch
 
 ## Infra
 
-Local: [Swagger](http://localhost:80/swagger/index.html)
+Local: [Swagger](http://localhost:8080/swagger/index.html)
 
 ```shell
 sh ./resources/swagger.sh

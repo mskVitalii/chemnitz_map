@@ -8,7 +8,6 @@ function ProtectedRoute() {
     return <Loader />;
   }
   if (userClaims.isError) {
-    console.log("[ProtectedRoute] userClaims.isError", userClaims.isError);
     return <Navigate to="/login" replace />;
   }
 

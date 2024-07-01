@@ -33,7 +33,6 @@ import (
 // @contact.name				Vitalii Popov
 // @contact.url				https://www.linkedin.com/in/mskVitalii/
 // @contact.email				msk.vitaly@gmail.com
-// @host						localhost:80
 // @BasePath					/
 // @securityDefinitions.apikey	BearerAuth
 // @in							header
@@ -122,7 +121,12 @@ func startup(cfg *config.Config) {
 	})
 
 	corsCfg := cors.DefaultConfig()
-	corsCfg.AllowOrigins = []string{cfg.FrontendUrl}
+	corsCfg.AllowOrigins = []string{
+		cfg.FrontendUrl,
+		"http://prometheus:9090",
+		"http://chemnitz-map.local",
+		"http://api.chemnitz-map.local",
+		"http://localhost:8080"}
 	corsCfg.AllowCredentials = true
 	corsCfg.AddExposeHeaders(telemetry.TraceHeader)
 	corsCfg.AddAllowHeaders(jwt.AuthorizationHeader)

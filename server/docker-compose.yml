@@ -1,6 +1,6 @@
 services:
   # ----------------------------------- APPS
-  chemnitz_map_server:
+  chemnitz-map-server:
     build: .
     develop:
       watch:
@@ -15,7 +15,7 @@ services:
       start_period: 1s
       retries: 3
     ports:
-      - "80:80"
+      - "8080:8080"
     networks:
       - dwt_network
     depends_on:
@@ -114,5 +114,5 @@ networks:
 # Persistent data stores
 volumes:
   mongodb-data:
-  chemnitz_map_server:
+  chemnitz-map-server:
   grafana:

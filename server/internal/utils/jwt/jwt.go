@@ -35,8 +35,8 @@ func Startup(cfg *config.Config, service routes.IAuthService) *jwt.GinJWTMiddlew
 		Authorizator:    authorization,
 		Unauthorized:    unauthorized,
 		PayloadFunc:     payloadFunc,
-		LoginResponse:   loginResponse(cfg.FrontendUrl),
-		RefreshResponse: refreshResponse(cfg.FrontendUrl),
+		LoginResponse:   loginResponse,
+		RefreshResponse: refreshResponse,
 		// TokenLookup is a string in the form of "<source>:<name>" that is used
 		// to extract token from the request.
 		// Optional. Default value "header:Authorization".
@@ -159,38 +159,24 @@ func CleanUpToken(c *gin.Context) {
 	c.SetCookie(AuthorizationCookie, "", -1, "/", "", false, true)
 }
 
-func loginResponse(frontendUrl string) func(c *gin.Context, code int, message string, time time.Time) {
-	return func(c *gin.Context, code int, message string, time time.Time) {
-		maxAge := int(Timeout.Seconds())
-		expire := time.Add(Timeout)
-		domain, err := lib.GetDomainFromURL(frontendUrl)
-		if err != nil {
-			lib.ResponseInternalServerError(c, err, "failed to get domain")
-			return
-		}
-
-		c.SetCookie(AuthorizationCookie, message, maxAge, "/", domain, false, true)
-		c.JSON(http.StatusOK, dto.SuccessLoginResponse{
-			Message: "Login successful",
-			Expire:  expire,
-		})
-	}
+func loginResponse(c *gin.Context, _ int, message string, time time.Time) {
+	maxAge := int(Timeout.Seconds())
+	expire := time.Add(Timeout)
+	domain := c.Request.Host
+	c.SetCookie(AuthorizationCookie, message, maxAge, "/", domain, false, true)
+	c.JSON(http.StatusOK, dto.SuccessLoginResponse{
+		Message: "Login successful",
+		Expire:  expire,
+	})
 }
 
-func refreshResponse(frontendUrl string) func(c *gin.Context, code int, message string, time time.Time) {
-	return func(c *gin.Context, code int, message string, time time.Time) {
-		maxAge := int(Timeout.Seconds())
-		expire := time.Add(Timeout)
-		domain, err := lib.GetDomainFromURL(frontendUrl)
-		if err != nil {
-			lib.ResponseInternalServerError(c, err, "failed to get domain")
-			return
-		}
-
-		c.SetCookie(AuthorizationCookie, message, maxAge, "/", domain, false, true)
-		c.JSON(http.StatusOK, dto.SuccessRefreshTokenResponse{
-			Message: "Token refreshed successfully",
-			Expire:  expire,
-		})
-	}
+func refreshResponse(c *gin.Context, _ int, message string, time time.Time) {
+	maxAge := int(Timeout.Seconds())
+	expire := time.Add(Timeout)
+	domain := c.Request.Host
+	c.SetCookie(AuthorizationCookie, message, maxAge, "/", domain, false, true)
+	c.JSON(http.StatusOK, dto.SuccessRefreshTokenResponse{
+		Message: "Token refreshed successfully",
+		Expire:  expire,
+	})
 }

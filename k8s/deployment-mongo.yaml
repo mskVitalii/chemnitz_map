@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          envFrom:
+            - secretRef:
+                name: chemnitz-map
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+            - name: mongo-init-script
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+          command: [ "sh", "-c", "mongod --fork --logpath /var/log/mongodb.log --bind_ip_all && sleep 5 && mongosh < /docker-entrypoint-initdb.d/mongo-init.js && mongod --shutdown && mongod --bind_ip_all" ]
+      volumes:
+        - name: mongo-persistent-storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+        - name: mongo-init-script
+          configMap:
+            name: mongo-init-configmap

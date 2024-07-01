@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyroscope
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pyroscope
+  template:
+    metadata:
+      labels:
+        app: pyroscope
+    spec:
+      containers:
+        - name: pyroscope
+          image: pyroscope/pyroscope:latest
+          ports:
+            - containerPort: 4040
+          env:
+            - name: PYROSCOPE_STORAGE_PATH
+              value: /var/lib/pyroscope
+          volumeMounts:
+            - name: pyroscope-storage
+              mountPath: /var/lib/pyroscope
+          args: ["server"]
+      volumes:
+        - name: pyroscope-storage
+          emptyDir: {}

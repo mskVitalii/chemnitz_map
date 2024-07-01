@@ -1,11 +1,11 @@
 services:
   # ----------------------------------- APPS
-  chemnitz_map_client:
-    container_name: chemnitz_map_client
+  chemnitz-map-client:
+    container_name: chemnitz-map-client
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.Dev
     ports:
       - 3000:3000
-    environment:
-      NODE_ENV: production
+    env_file:
+      - .env

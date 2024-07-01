@@ -14,6 +14,9 @@ export default defineConfig({
   build: {
     outDir: "build"
   },
+  define: {
+    "process.env": process.env
+  },
 
   resolve: {
     alias: [
