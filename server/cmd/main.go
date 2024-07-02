@@ -124,8 +124,8 @@ func startup(cfg *config.Config) {
 	corsCfg.AllowOrigins = []string{
 		cfg.FrontendUrl,
 		"http://prometheus:9090",
-		"http://chemnitz-map.local",
-		"http://api.chemnitz-map.local",
+		"https://chemnitz-map.local",
+		"https://api.chemnitz-map.local",
 		"http://localhost:8080"}
 	corsCfg.AllowCredentials = true
 	corsCfg.AddExposeHeaders(telemetry.TraceHeader)

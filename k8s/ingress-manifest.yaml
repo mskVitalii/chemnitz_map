@@ -5,9 +5,15 @@ metadata:
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/use-port-in-redirects: "true"
+#    nginx.ingress.kubernetes.io/use-port-in-redirects: "true"
+#    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - chemnitz-map.local
+        - api.chemnitz-map.local
+      secretName: chemnitz-map-tls
   rules:
     - host: grafana.local
       http:
